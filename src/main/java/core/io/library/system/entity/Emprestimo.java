@@ -1,10 +1,8 @@
 package core.io.library.system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import core.io.library.system.enums.StatusEmprestimo;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +20,15 @@ public class Emprestimo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @ManyToOne
+    @JsonIgnoreProperties({"id", "email", "senha"})
     private Usuario usuario;
+
+    @ManyToOne
+    @JsonIgnoreProperties({"id", "autor", "dataLancamento", "quantidadeDisponivelEmprestimo"})
     private Livros livros;
+
     private LocalDate dataEmprestimo;
     private LocalDate dataDevolucao;
     private StatusEmprestimo statusEmprestimo;
