@@ -24,6 +24,6 @@ public class Usuario {
     private String email;
     private String senha;
 
-    @OneToMany(mappedBy = "usuario_id")
+    @OneToMany(mappedBy = "usuario")
     private List<Livros> livros = new ArrayList<>();
 }

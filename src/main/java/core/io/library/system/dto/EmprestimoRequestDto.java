@@ -1,5 +1,6 @@
 package core.io.library.system.dto;
 
+import core.io.library.system.enums.StatusEmprestimo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,6 @@ public class EmprestimoRequestDto {
     private Integer livroId;
     private LocalDate dataEmprestimo;
     private LocalDate dataDevolucao;
-
+    private StatusEmprestimo statusEmprestimo;
 
 }

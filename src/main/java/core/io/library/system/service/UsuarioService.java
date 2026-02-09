@@ -1,13 +1,9 @@
 package core.io.library.system.service;
 
-import core.io.library.system.dto.LivrosResponseDto;
 import core.io.library.system.dto.UsuarioRequestDto;
 import core.io.library.system.dto.UsuarioResponseDto;
-import core.io.library.system.entity.Usuario;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 
 public interface UsuarioService {
     public UsuarioResponseDto salvarUsuario(UsuarioRequestDto usuarioRequestDto);
