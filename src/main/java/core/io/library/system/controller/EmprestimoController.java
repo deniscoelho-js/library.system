@@ -42,5 +42,14 @@ public class EmprestimoController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/buscarPorUsuarioId/{usuarioId}")
+    public ResponseEntity<List<EmprestimoResponseDto>> buscarPorUsuarioId(@PathVariable Integer usuarioId) {
+        return ResponseEntity.ok(emprestimoService.buscarEmprestimosPorUsuario(usuarioId));
+    }
+
+    @GetMapping("/buscarPorLivroId/{livroId}")
+    public ResponseEntity<List<EmprestimoResponseDto>> buscarPorLivroId(@PathVariable Integer livroId) {
+        return ResponseEntity.ok(emprestimoService.buscarEmprestimosPorLivro(livroId));
+    }
 
 }

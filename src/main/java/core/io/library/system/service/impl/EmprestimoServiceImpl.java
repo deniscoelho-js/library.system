@@ -58,4 +58,24 @@ public class EmprestimoServiceImpl implements EmprestimoService {
         emprestimoRepository.deleteById(id);
     }
 
+    @Override
+    public List<EmprestimoResponseDto> buscarEmprestimosPorUsuario(Integer usuarioId) {
+        List<Emprestimo> emprestimos = emprestimoRepository.findByUsuarioId(usuarioId);
+        if (emprestimos.isEmpty()) {
+            throw new EntityNotFoundException("Nenhum empréstimo encontrado para o usuário ID: " + usuarioId);
+        }
+        return emprestimoMapper.EmprestimoResponseDtos(emprestimos);
+    }
+
+    @Override
+    public List<EmprestimoResponseDto> buscarEmprestimosPorLivro(Integer livroId) {
+        List<Emprestimo> emprestimos = emprestimoRepository.findByLivrosId(livroId);
+        if (emprestimos.isEmpty()) {
+            throw new EntityNotFoundException("Nenhum empréstimo encontrado para o livro ID: " + livroId);
+        }
+        return emprestimoMapper.EmprestimoResponseDtos(emprestimos);
+    }
+
+
+
 }
