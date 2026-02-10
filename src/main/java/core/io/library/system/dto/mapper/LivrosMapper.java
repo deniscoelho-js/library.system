@@ -12,16 +12,16 @@ import java.util.stream.Collectors;
 @Component
 public class LivrosMapper {
 
-    public Livros toLivros(LivrosRequestDto LivrosRequestDto) {
-        return new ModelMapper().map(LivrosRequestDto, Livros.class);
+    public Livros toLivros(LivrosRequestDto livrosRequestDto) {
+        return new ModelMapper().map(livrosRequestDto, Livros.class);
     }
 
-    public LivrosResponseDto toLivrosResponseDto(Livros Livros) {
-        return new ModelMapper().map(Livros, LivrosResponseDto.class);
+    public LivrosResponseDto toLivrosResponseDto(Livros livros) {
+        return new ModelMapper().map(livros, LivrosResponseDto.class);
     }
 
-    public List<LivrosResponseDto> LivrosResponseDtos(List<Livros> Livross) {
-        return Livross.stream().map(Livros -> new ModelMapper().map(Livros, LivrosResponseDto.class))
+    public List<LivrosResponseDto> LivrosResponseDtos(List<Livros> livros) {
+        return livros.stream().map(Livros -> new ModelMapper().map(livros, LivrosResponseDto.class))
                 .collect(Collectors.toList());
     }
 }

@@ -12,16 +12,16 @@ import java.util.stream.Collectors;
 @Component
 public class MultaMapper {
 
-    public Multa toMulta(MultaRequestDto MultaRequestDto) {
-        return new ModelMapper().map(MultaRequestDto, Multa.class);
+    public Multa toMulta(MultaRequestDto multaRequestDto) {
+        return new ModelMapper().map(multaRequestDto, Multa.class);
     }
 
-    public MultaResponseDto toMultaResponseDto(Multa Multa) {
-        return new ModelMapper().map(Multa, MultaResponseDto.class);
+    public MultaResponseDto toMultaResponseDto(Multa multa) {
+        return new ModelMapper().map(multa, MultaResponseDto.class);
     }
 
-    public List<MultaResponseDto> MultaResponseDtos(List<Multa> Multas) {
-        return Multas.stream().map(Multa -> new ModelMapper().map(Multa, MultaResponseDto.class))
+    public List<MultaResponseDto> MultaResponseDtos(List<Multa> multas) {
+        return multas.stream().map(multa -> new ModelMapper().map(multa, MultaResponseDto.class))
                 .collect(Collectors.toList());
     }
 }

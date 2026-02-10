@@ -11,5 +11,5 @@ public interface LivrosService {
     public LivrosResponseDto buscarLivroId(Integer id);
     public List<LivrosResponseDto> listarLivros();
     public void deletarLivro(Integer id);
-    public LivrosResponseDto editarUsuario(Integer id, LivrosRequestDto livrosRequestDto);
+    public LivrosResponseDto editarLivro(Integer id, LivrosRequestDto livrosRequestDto);
 }

@@ -10,5 +10,5 @@ public interface EmprestimoService {
     public EmprestimoResponseDto buscarEmprestimoId(Integer id);
     public List<EmprestimoResponseDto> listarEmprestimos();
     public void deletarEmprestimo(Integer id);
-    public EmprestimoResponseDto editarEmprestimo(Integer id, EmprestimoRequestDto EmprestimoRequestDto);
+
 }
