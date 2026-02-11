@@ -1,7 +1,6 @@
 package core.io.library.system.controller;
 
-import core.io.library.system.dto.EmprestimoRequestDto;
-import core.io.library.system.dto.EmprestimoResponseDto;
+import core.io.library.system.dto.*;
 import core.io.library.system.dto.EmprestimoRequestDto;
 import core.io.library.system.dto.EmprestimoResponseDto;
 import core.io.library.system.service.EmprestimoService;
@@ -50,6 +49,11 @@ public class EmprestimoController {
     @GetMapping("/buscarPorLivroId/{livroId}")
     public ResponseEntity<List<EmprestimoResponseDto>> buscarPorLivroId(@PathVariable Integer livroId) {
         return ResponseEntity.ok(emprestimoService.buscarEmprestimosPorLivro(livroId));
+    }
+
+    @PostMapping("/devolverEmprestimo/{emprestimoId}")
+    public ResponseEntity<EmprestimoDevolucaoResponseDto> devolverEmprestimo(@PathVariable Integer emprestimoId) {
+        return ResponseEntity.ok(emprestimoService.devolverEmprestimo(emprestimoId));
     }
 
 }

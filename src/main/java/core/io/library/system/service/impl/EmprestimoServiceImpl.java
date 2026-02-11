@@ -1,5 +1,6 @@
 package core.io.library.system.service.impl;
 
+import core.io.library.system.dto.EmprestimoDevolucaoResponseDto;
 import core.io.library.system.dto.EmprestimoRequestDto;
 import core.io.library.system.dto.EmprestimoResponseDto;
 import core.io.library.system.dto.mapper.EmprestimoMapper;
@@ -7,14 +8,17 @@ import core.io.library.system.entity.*;
 import core.io.library.system.entity.Emprestimo;
 import core.io.library.system.entity.Emprestimo;
 import core.io.library.system.entity.Emprestimo;
+import core.io.library.system.enums.StatusEmprestimo;
 import core.io.library.system.repository.EmprestimoRepository;
 import core.io.library.system.repository.LivrosRepository;
 import core.io.library.system.repository.UsuarioRepository;
 import core.io.library.system.service.EmprestimoService;
+import core.io.library.system.util.Multa;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -32,11 +36,15 @@ public class EmprestimoServiceImpl implements EmprestimoService {
         Usuario usuario = usuarioRepository.findById(emprestimoRequestDto.getUsuarioId())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        // Buscar o livro pelo ID
         Livros livro = livrosRepository.findById(emprestimoRequestDto.getLivroId())
                 .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
 
-        Emprestimo emprestimo = emprestimoRepository.save(emprestimoMapper.toEmprestimo(emprestimoRequestDto, usuario, livro));
+        Emprestimo emprestimo = emprestimoMapper.toEmprestimo(emprestimoRequestDto, usuario, livro);
+
+        emprestimo.setDataEmprestimo(LocalDate.now());
+        emprestimo.setDataDevolucao(emprestimo.getDataEmprestimo().plusDays(15));
+
+        emprestimo = emprestimoRepository.save(emprestimo);
         return emprestimoMapper.toEmprestimoResponseDto(emprestimo);
     }
 
@@ -76,6 +84,27 @@ public class EmprestimoServiceImpl implements EmprestimoService {
         return emprestimoMapper.EmprestimoResponseDtos(emprestimos);
     }
 
+    @Override
+    public EmprestimoDevolucaoResponseDto devolverEmprestimo(Integer id) {
+        Emprestimo emprestimo = emprestimoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Livro não encontrado"));
+
+        LocalDate dataPrevista = emprestimo.getDataDevolucao();
+        LocalDate dataReal = LocalDate.now();
+        long diasAtraso = 0;
+        double valorMulta = 0.0;
+
+        if (emprestimo.getStatusEmprestimo().equals(StatusEmprestimo.ATRASADO)) {
+            Multa multa = new Multa(dataPrevista, dataReal);
+            diasAtraso = multa.getDiasAtraso();
+            valorMulta = multa.getValorTotal();
+        }
+
+        emprestimo.setStatusEmprestimo(StatusEmprestimo.DEVOLVIDO);
+        emprestimo.setDataDevolucao(dataReal);
+        emprestimoRepository.save(emprestimo);
+
+        return emprestimoMapper.toEmprestimoDevolucaoResponseDto(emprestimo, diasAtraso, valorMulta);
+    }
 
 
 }

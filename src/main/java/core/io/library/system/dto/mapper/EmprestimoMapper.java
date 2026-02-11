@@ -1,5 +1,6 @@
 package core.io.library.system.dto.mapper;
 
+import core.io.library.system.dto.EmprestimoDevolucaoResponseDto;
 import core.io.library.system.dto.EmprestimoRequestDto;
 import core.io.library.system.dto.EmprestimoResponseDto;
 import core.io.library.system.entity.Emprestimo;
@@ -42,4 +43,16 @@ public class EmprestimoMapper {
                 .map(this::toEmprestimoResponseDto)
                 .collect(Collectors.toList());
     }
+
+    public EmprestimoDevolucaoResponseDto toEmprestimoDevolucaoResponseDto(Emprestimo emprestimo, long diasAtraso, double valorMulta) {
+        return new EmprestimoDevolucaoResponseDto(
+                emprestimo.getId(),
+                emprestimo.getUsuario().getNome(),
+                emprestimo.getLivros().getTitulo(),
+                emprestimo.getDataDevolucao(),
+                diasAtraso,
+                valorMulta
+        );
+    }
+
 }
